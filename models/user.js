@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
 
-    return sequelize.define('users', {
+    return sequelize.define('T_Migration_Users', {
         firstName: {
             type: DataTypes.TEXT,
             allowNull: false,

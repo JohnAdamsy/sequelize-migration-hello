@@ -2,7 +2,7 @@ const Promise = require('bluebird');
 
 module.exports = {
     up: function(query, DataTypes) {
-        return query.createTable('users', {
+        return query.createTable('T_Migration_Users', {
             id: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
@@ -28,6 +28,6 @@ module.exports = {
 
     down: function(query, DataTypes) {
         // return query.dropAllTables();
-        return query.dropTable('users');
+        return query.dropTable('T_Migration_Users');
     }
 };

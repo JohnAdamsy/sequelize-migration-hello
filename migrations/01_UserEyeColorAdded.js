@@ -3,7 +3,7 @@ const Promise = require('bluebird');
 module.exports = {
     up: function(query, DataTypes) {
         return query.addColumn(
-            'users', 'eyeColor',
+            'T_Migration_Users', 'eyeColor',
             DataTypes.ENUM('unspecified', 'green', 'blue', 'hazel'),
             {
                 allowNull: true,
@@ -11,7 +11,7 @@ module.exports = {
             }
         ).then(() => {
             return query.sequelize.query(
-                `UPDATE "users" SET "eyeColor"='unspecified' WHERE "eyeColor" IS NULL;`,
+                `UPDATE "T_Migration_Users" SET "eyeColor"='unspecified' WHERE "eyeColor" IS NULL;`,
                 { raw: true });
         });
     },
@@ -20,7 +20,7 @@ module.exports = {
         // NOTE: Sequelize does not play nice with postgres enums
         //       requires a raw query
         return query.sequelize.query([
-            'ALTER TABLE "users" DROP COLUMN "eyeColor";',
+            'ALTER TABLE "T_Migration_Users" DROP COLUMN "eyeColor";',
             'DROP TYPE "enum_users_eyeColor";',
         ].join(''), { raw: true });
 

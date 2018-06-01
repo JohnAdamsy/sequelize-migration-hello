@@ -3,8 +3,8 @@ const Promise = require('bluebird');
 module.exports = {
     up: function(query, DataTypes) {
         return query.sequelize.query([
-                `ALTER TABLE "users" ALTER COLUMN "eyeColor" SET NOT NULL;`,
-                `ALTER TABLE "users" ALTER COLUMN "eyeColor" DROP DEFAULT;`
+                `ALTER TABLE "T_Migration_Users" ALTER COLUMN "eyeColor" SET NOT NULL;`,
+                `ALTER TABLE "T_Migration_Users" ALTER COLUMN "eyeColor" DROP DEFAULT;`
             ].join(''),
             { raw: true });
     },
@@ -12,8 +12,8 @@ module.exports = {
     down: function(query, DataTypes) {
         return query.sequelize.query(
             [
-                `ALTER TABLE "users" ALTER COLUMN "eyeColor" DROP NOT NULL;`,
-                `ALTER TABLE "users" ALTER COLUMN "eyeColor" SET DEFAULT 'unspecified';`,
+                `ALTER TABLE "T_Migration_Users" ALTER COLUMN "eyeColor" DROP NOT NULL;`,
+                `ALTER TABLE "T_Migration_Users" ALTER COLUMN "eyeColor" SET DEFAULT 'unspecified';`,
             ].join(''),
             { raw: true });
     }
