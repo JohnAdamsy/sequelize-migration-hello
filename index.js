@@ -8,12 +8,12 @@ const getModels = require('./models');
 const PORT = process.env.PORT || 8080;
 
 const DB_TYPE = 'postgres';
-const DB_HOST = process.env.DB_HOST || 'localhost';
+const DB_HOST = process.env.POSTGRES_DB_SERVER || 'localhost';
 const DB_PORT = process.env.DB_PORT || 5432;
 
-const DB_NAME = 'sequelize_migration_demo';
-const DB_USER = 'sequelize_demo_admin';
-const DB_PASS = '';
+const DB_NAME = process.env.POSTGRES_DB_NAME || 'sequelize_migration_demo';
+const DB_USER = process.env.POSTGRES_DB_USER || 'sequelize_demo_admin';
+const DB_PASS = POSTGRES_DB_PASSWORD || '';
 
 const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
   host: DB_HOST,
