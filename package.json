@@ -1,7 +1,7 @@
 {
-  "name": "sequelize-migration-hello",
+  "name": "Sequelize-Migration-Service",
   "version": "1.0.0",
-  "description": "Testing of db migrations",
+  "description": "Handles DB Migrations without tampering with the data in the process.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,22 +9,31 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/abelnation/sequelize-migration-hello.git"
+    "url": "git+ssh://git@github.com:JohnAdamsy/sequelize-migration-hello.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "J.O.A <adams.opiyo@gmail.com>",
+  "license": "UNLICENSED",
   "bugs": {
-    "url": "https://github.com/abelnation/sequelize-migration-hello/issues"
+    "url": "https://github.com/JohnAdamsy/sequelize-migration-hello/issues"
   },
-  "homepage": "https://github.com/abelnation/sequelize-migration-hello#readme",
+  "engines": {
+    "node": ">=6.9.5"
+  },
+  "homepage": "https://github.com/JohnAdamsy/sequelize-migration-hello#readme",
   "dependencies": {
     "bluebird": "^3.4.7",
     "body-parser": "^1.17.0",
+    "entity-migration-user": "git+ssh://git@github.com/JohnAdamsy/entity-migration-user.git",
     "express": "^4.15.0",
     "lodash": "^4.17.4",
     "nodemon": "^1.11.0",
     "pg": "^6.1.2",
     "sequelize": "^3.30.2",
     "umzug": "^1.11.0"
+  },
+  "devDependencies": {
+    "chai": "~3.5.0",
+    "mocha": "~3.0.2",
+    "supertest": "~2.0.0"
   }
 }

@@ -1,13 +1,8 @@
 # sequelize-migration-hello
-Testing of db migrations
+Testing of db migrations and using sequelize models stored in a private npm registry somewhere
 
 ## Description
-
-This repo is a simple demo of a basic database migration.  It demonstrates the usage of
-`Sequelize` and `Umzug` to perform database migrations along with the application code
-changes that accompany the migration each step of the way.  The emphasis is on demonstrating
-a database migration that can be applied while production code is running in the wild,
-ensuring backwards compatibility each step of the way.
+A modified fork from [abelnation](https://github.com/abelnation/sequelize-migration-hello) and with contributions from  [lestoni](https://github.com/lestoni).
 
 A simple web server is provided that allows you to interact with the app at each step
 of the way via simple get/post requests with following endpoints:
@@ -17,13 +12,6 @@ of the way via simple get/post requests with following endpoints:
 - `GET  /users/dsql`: view sequelize description of users table
 - `GET  /users/dpg`: view postgres description of users table
 
-The repo demonstrates 5 steps.
-
-1. Initial Setup (branch: `01-initial`)
-2. DB: Add column with default value (branch: `02-addCol`)
-3. App: Support column in data model, enforce validation (branch: `03-app-support-added`)
-4. DB: Remove default value, require value (branch: `04-lock-down-db`)
-5. App: Remove default value (branch: `05-lock-down-app`)
 
 The repo comes with a helper script for executing migration steps: `migrate.js`.  It
 supports the following commands:
@@ -44,7 +32,7 @@ node ./migrate.js <command>
 ## Full demo flow
 
 ```shell
-HOST="localhost:8080"
+HOST="localhost:9333"
 GET="curl -H "Content-Type: application/json" -X GET"
 POST="curl -H "Content-Type: application/json" -X POST"
 
@@ -93,13 +81,3 @@ node ./migrate.js up
 ${POST} ${HOST}/users -d '{"firstName":"Abel","lastName":"Allison"}'
 ```
 
-## Setup
-
-```shell
-# Create admin-user and db
-createuser sequelize_demo_admin --createdb --superuser
-createdb sequelize_migration_demo --username sequelize_demo_admin
-
-# Verify works
-psql -d sequelize_migration_demo -U sequelize_demo_admin
-```

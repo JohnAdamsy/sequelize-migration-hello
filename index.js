@@ -1,34 +1,13 @@
+
 const _ = require('lodash');
 const express = require('express');
-const Sequelize = require('sequelize');
 const BodyParser = require('body-parser');
 
-const getModels = require('./models');
-
-const PORT = process.env.PORT || 8080;
-
-const DB_TYPE = 'postgres';
-const DB_HOST = process.env.POSTGRES_DB_SERVER || 'localhost';
-const DB_PORT = process.env.DB_PORT || 5432;
-
-const DB_NAME = process.env.POSTGRES_DB_NAME || 'sequelize_migration_demo';
-const DB_USER = process.env.POSTGRES_DB_USER || 'sequelize_demo_admin';
-const DB_PASS = process.env.POSTGRES_DB_PASSWORD || '';
-
-const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
-  host: DB_HOST,
-  port: DB_PORT,
-  dialect: DB_TYPE,
-
-  pool: {
-    max: 5,
-    min: 0,
-    idle: 10000
-  },
-});
+const db = require('./db');
+const config = require('./config');
+const PORT = config.PORT;
 
 const app = express();
-const models = getModels(sequelize);
 
 function respondOk(res, body) {
     res.status(200).json(body);
@@ -41,9 +20,9 @@ function respondError(res, err) {
 }
 
 function describeSequelizeModel(modelName) {
-    const model = models[modelName];
+    const model = db[modelName];
     if (!model) {
-        respondError(res, new Error(`Invalid modelName: ${ modelName }`))
+      respondError(res, new Error(`Invalid modelName: ${ modelName }`));
     }
     return (req, res) => {
         const attrs = _.reduce(model.rawAttributes, (result, attr, name) => {
@@ -57,7 +36,7 @@ function describeSequelizeModel(modelName) {
 }
 
 function describePostgresModel(modelName) {
-    const model = models[modelName];
+    const model = db[modelName];
     if (!model) {
         respondError(res, new Error(`Invalid modelName: ${ modelName }`))
     }
@@ -80,7 +59,7 @@ app.get('/test', (req, res) => {
 });
 
 app.get('/users', (req, res) => {
-    models.User.findAll().then(users => {
+    db.User.findAll().then(users => {
         respondOk(res, {
             users: users
         });
@@ -89,16 +68,16 @@ app.get('/users', (req, res) => {
     })
 });
 app.post('/users', (req, res) => {
-    const user = models.User.build(req.body);
+    const user = db.User.build(req.body);
     user.save().then(() => {
         respondOk(res, user);
     }).catch(err => {
         respondError(res, err);
     })
 })
-app.get('/users/dsql', describeSequelizeModel('User'))
-app.get('/users/dpg', describePostgresModel('User'))
+app.get('/users/dsql', describeSequelizeModel('MigrationUser'))
+app.get('/users/dpg', describePostgresModel('MigrationUser'))
 
 app.listen(PORT, function() {
-	console.log(`test server listening on port ${ PORT }`);
+	console.log(`Migration server listening on port ${ PORT }`);
 });

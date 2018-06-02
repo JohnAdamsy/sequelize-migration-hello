@@ -1,45 +1,26 @@
 const path = require('path');
 const child_process = require('child_process');
 const Promise = require('bluebird');
-const Sequelize = require('sequelize');
 const Umzug = require('umzug');
-
-const DB_TYPE = 'postgres';
-const DB_HOST = process.env.POSTGRES_DB_SERVER || 'localhost';
-const DB_PORT = process.env.DB_PORT || 5432;
-
-const DB_NAME = process.env.POSTGRES_DB_NAME || 'sequelize_migration_demo';
-const DB_USER = process.env.POSTGRES_DB_USER || 'sequelize_demo_admin';
-const DB_PASS = process.env.POSTGRES_DB_PASSWORD || '';
-
-const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
-  host: DB_HOST,
-  port: DB_PORT,
-  dialect: DB_TYPE,
-
-  pool: {
-    max: 5,
-    min: 0,
-    idle: 10000
-  },
-});
+const db = require('./db');
 
 const umzug = new Umzug({
     storage: 'sequelize',
     storageOptions: {
-        sequelize: sequelize,
+        sequelize: db.sequelize,
     },
 
     // see: https://github.com/sequelize/umzug/issues/17
     migrations: {
         params: [
-            sequelize.getQueryInterface(), // queryInterface
-            sequelize.constructor, // DataTypes
+            db.sequelize, //sequelize
+            db.sequelize.getQueryInterface(), // queryInterface
+            db.sequelize.constructor, // DataTypes
             function() {
                 throw new Error('Migration tried to use old style "done" callback. Please upgrade to "umzug" and return a promise instead.');
             }
         ],
-        path: './migrations',
+        path: './migrations/migration-user',
         pattern: /\.js$/
     },
 
