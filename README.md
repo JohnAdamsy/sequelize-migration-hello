@@ -1,8 +1,10 @@
 # sequelize-migration-hello
-Testing of db migrations and using sequelize models stored in a private npm registry somewhere
+Testing of db migrations and using sequelize models stored somewhere in the wild such as a private npm registry.
 
 ## Description
-A modified fork from [abelnation](https://github.com/abelnation/sequelize-migration-hello) and with contributions from  [lestoni](https://github.com/lestoni).
+A modified fork from [abelnation](https://github.com/abelnation/sequelize-migration-hello) and with contributions to simply sequelize model initialization from  [lestoni](https://github.com/lestoni).
+
+The `model` being used is installed by npm from: [entity-migration-user](https://github.com/JohnAdamsy/entity-migration-user)
 
 A simple web server is provided that allows you to interact with the app at each step
 of the way via simple get/post requests with following endpoints:
